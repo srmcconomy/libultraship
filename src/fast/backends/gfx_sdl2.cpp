@@ -746,7 +746,10 @@ void GfxWindowBackendSDL2::SwapBuffersBegin() {
         SDL_RenderSetVSync(mRenderer, mVsyncEnabled ? 1 : 0);
     }
 
+#ifndef __EMSCRIPTEN__
+    // In the browser, requestAnimationFrame paces frames and sleeping would block the page
     SyncFramerateWithTime();
+#endif
     SDL_GL_SwapWindow(mWnd);
 }
 
